@@ -12,20 +12,18 @@
       />
     </div>
     <div class="alert-widget__counters">
-      <Counter
-        :value="errorsInLastHour"
-        :avgValue="avgErrorsValue"
+      <MeasureWidget
+        :data="errors"
         :label="labels.errorsInLastHour"
         :type="'error'"
       />
-      <Counter
-        :value="warningsInLastHour"
-        :avgValue="avgWarningsValue"
+      <MeasureWidget
+        :data="warnings"
         :label="labels.warningsInLastHour"
         :type="'warning'"
       />
-      <Counter
-        :value="operationsInLastHour"
+      <MeasureWidget
+        :data="operations"
         :label="labels.operationsInLastHour"
         :type="'operation'"
       />
@@ -39,13 +37,14 @@
 </template>
 
 <script>
-import { getAlerts } from '../services/alerts'
-import labels from '../labels/labels'
-import Counter from './Counter'
+import { getAlerts } from '../services/alerts';
+import labels from '../labels/labels';
+import Counter from './Counter';
+import MeasureWidget from './MeasureWidget.vue';
 
 export default {
   name: 'AlertWidget',
-  components: { Counter },
+  components: { Counter, MeasureWidget },
   props: ['syncTime'],
   data() {
     return {
@@ -54,25 +53,17 @@ export default {
       avgResponseTime: 0,
       avgResponseTimeWarningLimit: 0,
       avgResponseTimeAlertLimit: 0,
-      errorsInLastHour: 0,
-      warningsInLastHour: 0,
-      operationsInLastHour: 0,
+      errors: [],
+      warnings: [],
+      operations: [],
       lastErrorDate: '-',
       dailyErrorCount: 0,
       sinceLastSyncDate: null,
       dateNow: new Date(),
-      avgErrorsValue: 0,
-      avgWarningsValue: 0,
       labels
     };
   },
   methods: {
-    countAverageValue(arr) {
-      const sum = arr.reduce((a,b) => {
-        return { Value: a.Value + b.Value }
-      }).Value;
-      return Math.round(sum / arr.length);
-    },
     updateTime() {
       this.dateNow = new Date();
     },
@@ -85,12 +76,10 @@ export default {
       this.avgResponseTimeAlertLimit = res.AvgResponseTimeAlertLimit;
       this.dailyErrorCount = res.DailyErrorCount;
       this.lastErrorDate = res.LastErrorStr;
-      this.errorsInLastHour = res.Errors[0].Value;
-      this.warningsInLastHour = res.Warnings[0].Value;
-      this.operationsInLastHour = res.Operations[0].Value;
+      this.errors = res.Errors;
+      this.warnings = res.Warnings;
+      this.operations = res.Operations;
       this.sinceLastSyncDate = new Date();
-      this.avgErrorsValue = this.countAverageValue(res.Errors);
-      this.avgWarningsValue = this.countAverageValue(res.Warnings);
     }
   },
   computed: {

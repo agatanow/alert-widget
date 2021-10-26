@@ -39,7 +39,7 @@ export default {
 
 <style scoped lang="scss">
   .bar-plot {
-    width: 500px; //change
+    flex-grow: 1;
     display: flex;
     align-items: stretch;
     flex-direction: row;
@@ -48,15 +48,19 @@ export default {
       position: relative;
       flex-grow: 1;
       flex-basis: 0;
-      margin-bottom: 30px;
-      margin-right: 2px;
+      margin-bottom: 20px;
+      margin-right: 1px;
+      @include breakpoint-sm {
+        margin-right: 2px;
+      }
 
       &__label {
-        height: 30px;
-        bottom: -30px;
+        height: 15px;
+        bottom: -20px;
         left: 0;
-        width: 100%;
         position: absolute;
+        font-size: 10px;
+        font-weight: bold;
       }
 
       &__bar {
@@ -68,17 +72,18 @@ export default {
         transition: height 0.25s ease-in;
         &__value {
           display:none;
-
         }
         &:hover &__value{
           display:block;
           z-index: 3;
           position: absolute;
           bottom: 30px;
-          background: $--graphit;
+          background: $--white;
+          padding: 5px;
         }
       }
     }
+
     &--error &__element{
       &__bar {
         background: $--red;
@@ -87,6 +92,7 @@ export default {
         color:  $--red;
       }
     }
+
     &--warning &__element {
       &__bar {
         background: $--mustard;

@@ -31,11 +31,14 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     color: $--graphit;
+    align-items: center;
+    width: 150px;
+    margin: auto;
 
     @include breakpoint-sm {
-      align-items: center;
+      margin: unset;
     }
-
+    
     &__value{
       font-size: 1.6rem;
     }

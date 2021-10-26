@@ -1,7 +1,7 @@
 <template>
   <div class="measure-widget">
     <BarPlot
-      :bars="data"
+      :bars="barData"
       :type="type"
     />
     <Counter
@@ -34,6 +34,9 @@ export default {
     },
     valueInLastHour() {
       return this.data[0].Value;
+    },
+    barData() {
+      return this.data.slice().reverse();
     } 
   },
   methods: {
@@ -50,5 +53,17 @@ export default {
 <style scoped lang="scss">
   .measure-widget {
     display: flex;
+    flex-direction: column-reverse;
+
+    .bar-plot {
+      height: 70px;
+    }
+    @include breakpoint-sm {
+      flex-direction: row;
+      
+      .bar-plot {
+        margin-right: 30px;
+      }
+    }
   }
 </style>

@@ -11,7 +11,7 @@
         :type="averageResponseTimeType"
       />
     </div>
-    <div class="alert-widget__counters">
+    <div class="alert-widget__measurements">
       <MeasureWidget
         :data="errors"
         :label="labels.errorsInLastHour"
@@ -114,7 +114,6 @@ export default {
 
 <style scoped lang="scss">
 .alert-widget {
-  padding: 20px;
   background: $--black-semi-transparent;
   margin: auto;
   margin-bottom: 20px;
@@ -125,11 +124,13 @@ export default {
     justify-content: space-between;
     flex-wrap: wrap;
     flex-direction: column;
+    padding: 20px;
+    padding-bottom: 0;
 
     @include breakpoint-sm {
       flex-direction: row;
       align-items: end;
-      padding-bottom: 10px;
+      padding-bottom: 20px;
 
       & .counter {
         padding: 0;
@@ -137,6 +138,12 @@ export default {
         &__value{
           font-size: 1.3rem;
         }
+      }
+    }
+    &__info {
+      text-align: center;  
+      @include breakpoint-sm {
+        text-align: left;
       }
     }
   }
@@ -153,37 +160,26 @@ export default {
     color: $--graphit;
   }
 
-  &__counters {
+  &__measurements {
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
     flex-direction: column;
-
-    @include breakpoint-sm {
-      flex-direction: row;
-    }
+    padding: 20px;
   }
+  
   &__details {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     flex-direction: column;
+    padding-bottom: 20px;
 
     & div {
-
+      padding: 0 20px;
       & p {
         white-space: nowrap;
         margin: 10px 0 0;
         color: $--lavender;
         display: inline-block;
-      }
-
-      @include breakpoint-sm {
-        width: 50%;
-
-        &:nth-child(even){
-          text-align: right;
-        }
       }
     }
 

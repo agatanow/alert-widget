@@ -33,7 +33,10 @@ export default {
       return 0;
     },
     valueInLastHour() {
-      return this.data[0].Value;
+      if(this.data && this.data[0]) {
+        return this.data[0].Value;
+      }
+      return 0;
     },
     barData() {
       return this.data.slice().reverse();
@@ -43,7 +46,7 @@ export default {
     countAverageValue(arr) {
       const sum = arr.reduce((a,b) => {
         return { Value: a.Value + b.Value }
-      }).Value;
+      }, { Value: 0 }).Value;
       return Math.round(sum / arr.length);
     },
   }
@@ -60,7 +63,7 @@ export default {
     }
     @include breakpoint-sm {
       flex-direction: row;
-      
+
       .bar-plot {
         margin-right: 30px;
       }

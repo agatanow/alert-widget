@@ -71,10 +71,10 @@ export default {
         left:0;
         transition: height 0.25s ease-in;
         &__value {
-          display:none;
+          display: none;
         }
         &:hover &__value{
-          display:block;
+          display: block;
           z-index: 3;
           position: absolute;
           bottom: 30px;
